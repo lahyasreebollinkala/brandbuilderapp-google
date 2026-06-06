@@ -364,6 +364,12 @@ fun BrandApp(viewModel: BrandViewModel) {
                                     onValueChange = { viewModel.productName.value = it },
                                     label = { Text("Product Name") },
                                     placeholder = { Text("e.g. Ascent Flask, Eon Watch") },
+                                    isError = productName.trim().isEmpty() && generationStatus.errorSummary != null,
+                                    supportingText = {
+                                        if (productName.trim().isEmpty() && generationStatus.errorSummary != null) {
+                                            Text("Product Name is required", color = MaterialTheme.colorScheme.error)
+                                        }
+                                    },
                                     colors = OutlinedTextFieldDefaults.colors(
                                         focusedBorderColor = BorderGold,
                                         unfocusedBorderColor = Color(0xFFE2E8F0),
@@ -386,6 +392,12 @@ fun BrandApp(viewModel: BrandViewModel) {
                                     onValueChange = { viewModel.productDescription.value = it },
                                     label = { Text("Product Description") },
                                     placeholder = { Text("Describe the product physical looks, materials, finish, specific color style, detailing...") },
+                                    isError = productDescription.trim().isEmpty() && generationStatus.errorSummary != null,
+                                    supportingText = {
+                                        if (productDescription.trim().isEmpty() && generationStatus.errorSummary != null) {
+                                            Text("Product Description is required", color = MaterialTheme.colorScheme.error)
+                                        }
+                                    },
                                     colors = OutlinedTextFieldDefaults.colors(
                                         focusedBorderColor = BorderGold,
                                         unfocusedBorderColor = Color(0xFFE2E8F0),
@@ -486,7 +498,7 @@ fun BrandApp(viewModel: BrandViewModel) {
                                     onClick = { viewModel.startCampaignGeneration() },
                                     enabled = !isGeneratingAll,
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = AccentGoldDark,
+                                        containerColor = BorderGold,
                                         contentColor = Color.White,
                                         disabledContainerColor = Color(0xFFE2E8F0),
                                         disabledContentColor = Color.Gray
@@ -522,7 +534,7 @@ fun BrandApp(viewModel: BrandViewModel) {
                                             )
                                             Spacer(modifier = Modifier.width(8.dp))
                                             Text(
-                                                text = if (allCampaigns.any { it.productName == productName }) "Re-Image Global Campaign" else "Visualize Across Mediums",
+                                                text = if (allCampaigns.any { it.productName == productName }) "Re-Generate Brand Campaign" else "Generate Brand Campaign",
                                                 fontWeight = FontWeight.Bold,
                                                 fontSize = 14.sp
                                             )
