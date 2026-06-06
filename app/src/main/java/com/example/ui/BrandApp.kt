@@ -37,13 +37,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.data.BrandCampaign
 import kotlinx.coroutines.launch
 
-// Color Palette for Brand Builder Luxury Theme
-private val CharcoalDark = Color(0xFF101012)
-private val CardBackground = Color(0xFF1A1A1E)
-private val BorderGold = Color(0xFFD4AF37)
-private val LightGold = Color(0xFFF3E5AB)
-private val SlateText = Color(0xFF9E9E9E)
-private val AccentGoldDark = Color(0xFFAA7C11)
+// Color Palette for Brand Builder Series - Editorial Aesthetic Light Theme
+private val CharcoalDark = Color(0xFFFBFCFF) // Crisp Light canvas/background
+private val CardBackground = Color(0xFFFFFFFF) // White cards
+private val BorderGold = Color(0xFF6750A4) // Royal purple brand color
+private val LightGold = Color(0xFF21005D) // Deep rich purple
+private val SlateText = Color(0xFF64748B) // Slate grey for captions
+private val AccentGoldDark = Color(0xFF1D1B20) // Deep editorial dark charcoal
+private val SoftLavenderBkg = Color(0xFFF3EEFD) // Soft Lavender background highlights
 
 @Composable
 fun rememberBase64Image(base64Str: String?): ImageBitmap? {
@@ -135,14 +136,14 @@ fun BrandApp(viewModel: BrandViewModel) {
                                 Card(
                                     colors = CardDefaults.cardColors(
                                         containerColor = if (currentViewingCampaign?.id == campaign.id) {
-                                            Color(0xFF2C2518)
+                                            SoftLavenderBkg
                                         } else {
                                             CardBackground
                                         }
                                     ),
                                     border = BorderStroke(
                                         width = 1.dp,
-                                        color = if (currentViewingCampaign?.id == campaign.id) BorderGold else Color.Transparent
+                                        color = if (currentViewingCampaign?.id == campaign.id) BorderGold else Color(0xFFE2E8F0)
                                     ),
                                     onClick = {
                                         viewModel.selectCampaign(campaign)
@@ -161,7 +162,7 @@ fun BrandApp(viewModel: BrandViewModel) {
                                             Text(
                                                 text = campaign.productName,
                                                 fontWeight = FontWeight.Bold,
-                                                color = Color.White,
+                                                color = AccentGoldDark,
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis,
                                                 fontSize = 15.sp
@@ -205,8 +206,8 @@ fun BrandApp(viewModel: BrandViewModel) {
                             viewModel.resetInputs()
                             scope.launch { drawerState.close() }
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = CardBackground),
-                        border = BorderStroke(1.dp, SlateText.copy(alpha = 0.5f)),
+                        colors = ButtonDefaults.buttonColors(containerColor = AccentGoldDark),
+                        border = BorderStroke(1.dp, SlateText.copy(alpha = 0.2f)),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "New Campaign Icon", tint = Color.White)
@@ -221,27 +222,26 @@ fun BrandApp(viewModel: BrandViewModel) {
                 topBar = {
                     TopAppBar(
                         title = {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(modifier = Modifier.padding(vertical = 4.dp)) {
                                 Text(
-                                    text = "BRAND",
-                                    color = Color.White,
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Light,
-                                    letterSpacing = 2.sp
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    text = "BUILDER",
+                                    text = "CREATIVE ENGINE",
                                     color = BorderGold,
-                                    fontSize = 18.sp,
+                                    fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
                                     letterSpacing = 2.sp
+                                )
+                                Text(
+                                    text = "Brand Builder",
+                                    color = AccentGoldDark,
+                                    fontSize = 22.sp,
+                                    fontFamily = FontFamily.Serif,
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                                    fontWeight = FontWeight.SemiBold
                                 )
                             }
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = CharcoalDark,
-                            titleContentColor = Color.White
+                            containerColor = CharcoalDark
                         ),
                         navigationIcon = {
                             IconButton(onClick = { scope.launch { drawerState.open() } }) {
@@ -284,7 +284,7 @@ fun BrandApp(viewModel: BrandViewModel) {
                                     drawRect(
                                         brush = Brush.verticalGradient(
                                             colors = listOf(
-                                                AccentGoldDark.copy(alpha = 0.25f),
+                                                SoftLavenderBkg,
                                                 CharcoalDark
                                             )
                                         )
@@ -326,8 +326,9 @@ fun BrandApp(viewModel: BrandViewModel) {
                                 Text(
                                     text = "Imagine Your Product",
                                     fontSize = 24.sp,
+                                    fontFamily = FontFamily.Serif,
                                     fontWeight = FontWeight.Bold,
-                                    color = Color.White
+                                    color = AccentGoldDark
                                 )
                                 Text(
                                     text = "Describe your vision and render consistent, stunning branding across physical and digital mediums.",
@@ -344,7 +345,7 @@ fun BrandApp(viewModel: BrandViewModel) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
-                                .border(1.dp, BorderGold.copy(alpha = 0.12f), RoundedCornerShape(12.dp)),
+                                .border(1.dp, Color(0xFFE2E8F0), RoundedCornerShape(12.dp)),
                             shape = RoundedCornerShape(12.dp)
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
@@ -365,11 +366,11 @@ fun BrandApp(viewModel: BrandViewModel) {
                                     placeholder = { Text("e.g. Ascent Flask, Eon Watch") },
                                     colors = OutlinedTextFieldDefaults.colors(
                                         focusedBorderColor = BorderGold,
-                                        unfocusedBorderColor = Color.DarkGray,
+                                        unfocusedBorderColor = Color(0xFFE2E8F0),
                                         focusedLabelColor = BorderGold,
                                         unfocusedLabelColor = SlateText,
-                                        focusedTextColor = Color.White,
-                                        unfocusedTextColor = Color.White
+                                        focusedTextColor = AccentGoldDark,
+                                        unfocusedTextColor = AccentGoldDark
                                     ),
                                     singleLine = true,
                                     modifier = Modifier
@@ -387,11 +388,11 @@ fun BrandApp(viewModel: BrandViewModel) {
                                     placeholder = { Text("Describe the product physical looks, materials, finish, specific color style, detailing...") },
                                     colors = OutlinedTextFieldDefaults.colors(
                                         focusedBorderColor = BorderGold,
-                                        unfocusedBorderColor = Color.DarkGray,
+                                        unfocusedBorderColor = Color(0xFFE2E8F0),
                                         focusedLabelColor = BorderGold,
                                         unfocusedLabelColor = SlateText,
-                                        focusedTextColor = Color.White,
-                                        unfocusedTextColor = Color.White
+                                        focusedTextColor = AccentGoldDark,
+                                        unfocusedTextColor = AccentGoldDark
                                     ),
                                     maxLines = 4,
                                     modifier = Modifier
@@ -436,11 +437,11 @@ fun BrandApp(viewModel: BrandViewModel) {
                                             placeholder = { Text("e.g. Copper & Sage") },
                                             colors = OutlinedTextFieldDefaults.colors(
                                                 focusedBorderColor = BorderGold,
-                                                unfocusedBorderColor = Color.DarkGray,
+                                                unfocusedBorderColor = Color(0xFFE2E8F0),
                                                 focusedLabelColor = BorderGold,
                                                 unfocusedLabelColor = SlateText,
-                                                focusedTextColor = Color.White,
-                                                unfocusedTextColor = Color.White
+                                                focusedTextColor = AccentGoldDark,
+                                                unfocusedTextColor = AccentGoldDark
                                             ),
                                             singleLine = true,
                                             modifier = Modifier.fillMaxWidth()
@@ -454,8 +455,8 @@ fun BrandApp(viewModel: BrandViewModel) {
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .background(Color.Black.copy(alpha = 0.2f), RoundedCornerShape(6.dp))
-                                        .border(0.5.dp, BorderGold.copy(alpha = 0.2f), RoundedCornerShape(6.dp))
+                                        .background(SoftLavenderBkg, RoundedCornerShape(8.dp))
+                                        .border(0.5.dp, BorderGold.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
                                         .padding(8.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -468,8 +469,9 @@ fun BrandApp(viewModel: BrandViewModel) {
                                     Spacer(modifier = Modifier.width(6.dp))
                                     Text(
                                         text = "Consistency locked. No humans/people will be generated in shots.",
-                                        color = Color.LightGray,
-                                        fontSize = 11.sp
+                                        color = AccentGoldDark,
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Medium
                                     )
                                 }
 
@@ -484,20 +486,20 @@ fun BrandApp(viewModel: BrandViewModel) {
                                     onClick = { viewModel.startCampaignGeneration() },
                                     enabled = !isGeneratingAll,
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = BorderGold,
-                                        contentColor = Color.Black,
-                                        disabledContainerColor = Color.DarkGray,
-                                        disabledContentColor = Color.LightGray
+                                        containerColor = AccentGoldDark,
+                                        contentColor = Color.White,
+                                        disabledContainerColor = Color(0xFFE2E8F0),
+                                        disabledContentColor = Color.Gray
                                     ),
-                                    shape = RoundedCornerShape(8.dp),
+                                    shape = RoundedCornerShape(28.dp),
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(48.dp)
+                                        .height(54.dp)
                                         .testTag("generate_campaign_button")
                                 ) {
                                     if (isGeneratingAll) {
                                         CircularProgressIndicator(
-                                            color = Color.Black,
+                                            color = Color.White,
                                             modifier = Modifier.size(24.dp),
                                             strokeWidth = 2.dp
                                         )
@@ -508,11 +510,23 @@ fun BrandApp(viewModel: BrandViewModel) {
                                             fontSize = 14.sp
                                         )
                                     } else {
-                                        Text(
-                                            text = if (allCampaigns.any { it.productName == productName }) "Re-Image Global Campaign" else "Visualize Across Mediums",
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 14.sp
-                                        )
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Star,
+                                                contentDescription = "Visualize Icon",
+                                                tint = Color.White,
+                                                modifier = Modifier.size(18.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = if (allCampaigns.any { it.productName == productName }) "Re-Image Global Campaign" else "Visualize Across Mediums",
+                                                fontWeight = FontWeight.Bold,
+                                                fontSize = 14.sp
+                                            )
+                                        }
                                     }
                                 }
 
@@ -751,7 +765,7 @@ fun BrandApp(viewModel: BrandViewModel) {
                                             Column {
                                                 Text(
                                                     text = if (productName.isNotEmpty()) productName.lowercase() else "brandbuilder",
-                                                    color = Color.White,
+                                                    color = AccentGoldDark,
                                                     fontSize = 11.sp,
                                                     fontWeight = FontWeight.Bold
                                                 )
@@ -795,7 +809,7 @@ fun BrandApp(viewModel: BrandViewModel) {
                                             Icon(
                                                 imageVector = Icons.Default.Info,
                                                 contentDescription = "Details",
-                                                tint = Color.White,
+                                                tint = AccentGoldDark,
                                                 modifier = Modifier.size(16.dp)
                                             )
                                             Spacer(modifier = Modifier.weight(1f))
@@ -877,7 +891,7 @@ fun BrandApp(viewModel: BrandViewModel) {
 
                             Text(
                                 text = "Brand Consistency Details:",
-                                color = Color.White,
+                                color = AccentGoldDark,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp,
                                 modifier = Modifier.align(Alignment.Start)
@@ -894,8 +908,8 @@ fun BrandApp(viewModel: BrandViewModel) {
 
                             Button(
                                 onClick = { currentMediumPreview = null },
-                                colors = ButtonDefaults.buttonColors(containerColor = BorderGold, contentColor = Color.Black),
-                                shape = RoundedCornerShape(6.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = AccentGoldDark, contentColor = Color.White),
+                                shape = RoundedCornerShape(24.dp),
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(text = "Close Deck View")
@@ -920,8 +934,8 @@ fun ThemeRadioSelector(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { expanded = !expanded }
-            .border(1.dp, Color.DarkGray, RoundedCornerShape(4.dp))
-            .background(Color.Black.copy(alpha = 0.15f))
+            .border(1.dp, Color(0xFFE2E8F0), RoundedCornerShape(4.dp))
+            .background(CardBackground)
             .padding(12.dp)
     ) {
         Row(
@@ -931,7 +945,7 @@ fun ThemeRadioSelector(
         ) {
             Text(
                 text = selectedTheme,
-                color = Color.White,
+                color = AccentGoldDark,
                 fontSize = 14.sp
             )
             Icon(
@@ -947,14 +961,14 @@ fun ThemeRadioSelector(
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .background(CardBackground)
-                .border(1.dp, BorderGold.copy(alpha = 0.3f))
+                .border(1.dp, Color(0xFFE2E8F0))
         ) {
             themes.forEach { theme ->
                 DropdownMenuItem(
                     text = {
                         Text(
                             text = theme,
-                            color = if (theme == selectedTheme) BorderGold else Color.White,
+                            color = if (theme == selectedTheme) BorderGold else AccentGoldDark,
                             fontWeight = if (theme == selectedTheme) FontWeight.Bold else FontWeight.Normal
                         )
                     },
@@ -983,7 +997,7 @@ fun MediumMockupCard(
         colors = CardDefaults.cardColors(containerColor = CardBackground),
         modifier = Modifier
             .fillMaxWidth()
-            .border(0.5.dp, BorderGold.copy(alpha = 0.15f), RoundedCornerShape(10.dp)),
+            .border(1.dp, Color(0xFFE2E8F0), RoundedCornerShape(10.dp)),
         shape = RoundedCornerShape(10.dp)
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
@@ -996,9 +1010,10 @@ fun MediumMockupCard(
                 Column {
                     Text(
                         text = title,
+                        fontFamily = FontFamily.Serif,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        fontSize = 14.sp
+                        color = AccentGoldDark,
+                        fontSize = 15.sp
                     )
                     Text(
                         text = subtitle,
